@@ -97,3 +97,55 @@ main {
     background-color: #e80;
     transform: scale(1.05);
 }
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    gap: 2rem;
+}
+
+.feature-item {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: scale(1.05);
+}
+
+.feature-item img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.testimonials {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.testimonials h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.testimonial-item {
+    background: white;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-item:hover {
+    transform: scale(1.05);
+}
