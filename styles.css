@@ -1,0 +1,145 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Lobster', cursive;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f90;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    margin-top: auto;
+}
+
+main {
+    flex: 1;
+    padding: 2em;
+}
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-page .intro {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.home-page .product-gallery {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.home-page .product-gallery img {
+    max-width: 30%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.products-page .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2em;
+}
+
+.product-item {
+    text-align: center;
+    background-color: white;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.contact-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-page .contact-info {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.contact-page form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 1em 0;
+}
+
+.contact-page form label {
+    margin-top: 1em;
+}
+
+.contact-page form input, .contact-page form textarea {
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.contact-page form button {
+    padding: 0.5em;
+    margin-top: 1em;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.contact-page .contact-gallery {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.contact-page .contact-gallery img {
+    max-width: 45%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
