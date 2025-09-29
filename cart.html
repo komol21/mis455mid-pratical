@@ -571,7 +571,7 @@
                 <span>৳<span id="cart-total">0</span></span>
             </div>
             
-            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout Page</button>
         </div>
     </main>
     
@@ -581,6 +581,33 @@
     
     <script src="cart.js"></script>
     <script>
+        // Backup script loading in case the first one fails
+        (function() {
+            try {
+                // Check if cart variable exists
+                if (typeof cart === 'undefined') {
+                    console.warn('Cart variable not found, loading backup cart.js');
+                    const scriptEl = document.createElement('script');
+                    scriptEl.src = './cart.js';
+                    scriptEl.onload = function() {
+                        console.log('Backup cart.js loaded successfully');
+                        // Call initialization functions manually if needed
+                        if (typeof updateCartCount === 'function') {
+                            updateCartCount();
+                            
+                            // If on cart page, display cart
+                            if (typeof displayCart === 'function') {
+                                displayCart();
+                            }
+                        }
+                    };
+                    document.body.appendChild(scriptEl);
+                }
+            } catch (e) {
+                console.error('Error in backup script loading:', e);
+            }
+        })();
+        
         // Generate a random order ID
         function generateOrderID() {
             return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
@@ -666,18 +693,8 @@
             if (cart.length === 0) {
                 alert('Your cart is empty. Please add items to your cart before checking out.');
             } else {
-                // Generate and show bill
-                generateBill();
-                
-                // Get selected payment method
-                const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-                
-                // If selected payment method is Cash on Delivery, show additional message
-                if (selectedPayment === "cash") {
-                    setTimeout(() => {
-                        alert("Your order will be delivered within 3-5 business days. Please keep the payment ready for delivery.");
-                    }, 500);
-                }
+                // Redirect to the checkout page
+                window.location.href = 'checkout.html';
             }
         }
         

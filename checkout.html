@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - My Product Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Dark theme checkout styles */
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        header {
+            background-color: #000;
+            border-bottom: 1px solid #333;
+        }
+        
+        footer {
+            background-color: #000;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .checkout-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f5f5f5;
+            font-weight: 900;
+        }
+        
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        /* Billing Information Section */
+        .billing-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .billing-section h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: #f5f5f5;
+            font-weight: 700;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #f5f5f5;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #f5f5f5;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff4d4d;
+            box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.25);
+        }
+        
+        /* Order Summary Section */
+        .order-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .order-section h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: #f5f5f5;
+            font-weight: 700;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .order-items {
+            margin-bottom: 25px;
+        }
+        
+        .order-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .order-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .order-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .order-item-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+            color: #f5f5f5;
+        }
+        
+        .bangla {
+            display: block;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .price-info {
+            font-weight: 700;
+            color: #ff4d4d;
+            margin: 5px 0;
+        }
+        
+        .quantity-info {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .order-summary {
+            background-color: #252525;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .summary-row.total {
+            border-top: 1px solid #444;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .summary-row.total span:last-child {
+            color: #ff4d4d;
+        }
+        
+        /* Shipping Options */
+        .shipping-options {
+            margin: 25px 0;
+        }
+        
+        .shipping-options h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #f5f5f5;
+        }
+        
+        .shipping-method {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            background-color: #252525;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shipping-method:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .shipping-method.selected {
+            background-color: #333;
+            border: 1px solid #444;
+        }
+        
+        .shipping-method input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #ff4d4d;
+        }
+        
+        .shipping-method label {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .shipping-price {
+            font-weight: bold;
+            color: #ff4d4d;
+        }
+        
+        .shipping-time {
+            display: block;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        /* Payment Options */
+        .payment-options {
+            margin: 30px 0;
+        }
+        
+        .payment-options h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #f5f5f5;
+        }
+        
+        .payment-method {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            background-color: #252525;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .payment-method:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .payment-method.selected {
+            background-color: #333;
+            border: 1px solid #444;
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #ff4d4d;
+        }
+        
+        .payment-method label {
+            cursor: pointer;
+        }
+        
+        /* Checkout Button */
+        .checkout-btn {
+            background-color: #f5f5f5;
+            color: #121212;
+            border: none;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-top: 25px;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Payment Info Box */
+        .payment-info {
+            background-color: #252525;
+            padding: 15px 20px;
+            border-left: 4px solid #ff4d4d;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .payment-info p {
+            margin: 0;
+            color: #ddd;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+            
+            .order-item {
+                flex-direction: column;
+            }
+            
+            .order-item img {
+                margin-bottom: 10px;
+                margin-right: 0;
+                width: 100px;
+                height: 100px;
+            }
+            
+            .checkout-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Name :komol Krishna Paul, ID: 2221337 -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+            <p>Complete your purchase by providing your shipping and payment details</p>
+        </div>
+        
+        <div class="checkout-container">
+            <!-- Billing Information Section (Left) -->
+            <div class="billing-section">
+                <h2>Billing Information</h2>
+                <form id="billing-form">
+                    <div class="form-group">
+                        <label for="fullname">First Name & Last Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Country/Region</label>
+                        <select id="country" name="country" required>
+                            <option value="bangladesh" selected>Bangladesh</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city">Town/City</label>
+                        <input type="text" id="city" name="city" placeholder="Enter your town or city" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Street & House Number</label>
+                        <input type="text" id="address" name="address" placeholder="Enter your street address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postal">Postal Code</label>
+                        <input type="text" id="postal" name="postal" placeholder="Enter your postal code" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Order Summary Section (Right) -->
+            <div class="order-section">
+                <h2>Order Summary</h2>
+                
+                <div id="order-items" class="order-items">
+                    <!-- Order items will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="shipping-options">
+                    <h3>Shipping Method</h3>
+                    <div class="shipping-method selected" onclick="selectShippingMethod(this, 60, 'standard')">
+                        <input type="radio" id="standard-shipping" name="shipping" value="standard" checked onchange="updateShipping(60)">
+                        <label for="standard-shipping">
+                            Standard Shipping
+                            <span class="shipping-time">Delivery in 30 minutes</span>
+                        </label>
+                        <span class="shipping-price">৳60</span>
+                    </div>
+                    <div class="shipping-method" onclick="selectShippingMethod(this, 100, 'express')">
+                        <input type="radio" id="express-shipping" name="shipping" value="express" onchange="updateShipping(100)">
+                        <label for="express-shipping">
+                            Express Shipping
+                            <span class="shipping-time">Delivery in 20 minutes</span>
+                        </label>
+                        <span class="shipping-price">৳100</span>
+                    </div>
+                </div>
+                
+                <div class="payment-options">
+                    <h3>Payment Method</h3>
+                    <div class="payment-method selected" onclick="selectPaymentMethod(this, 'delivery')">
+                        <input type="radio" id="payment-delivery" name="payment" value="delivery" checked>
+                        <label for="payment-delivery">Payment on Delivery</label>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod(this, 'card')">
+                        <input type="radio" id="payment-card" name="payment" value="card">
+                        <label for="payment-card">Payment with Credit/Debit Card</label>
+                    </div>
+                </div>
+                
+                <div id="payment-info" class="payment-info">
+                    <p><strong>Payment on Delivery:</strong> Pay when your order arrives at your doorstep.</p>
+                </div>
+                
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>৳<span id="order-subtotal">0</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>৳<span id="order-shipping">60</span></span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>৳<span id="order-total">0</span></span>
+                    </div>
+                </div>
+                
+                <button id="checkout-btn" class="checkout-btn" onclick="placeOrder()">CHECKOUT</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 My Store</p>
+    </footer>
+    
+    <script src="cart.js"></script>
+    <script>
+        // Backup script loading in case the first one fails
+        (function() {
+            try {
+                // Check if cart variable exists
+                if (typeof cart === 'undefined') {
+                    console.warn('Cart variable not found, loading backup cart.js');
+                    const scriptEl = document.createElement('script');
+                    scriptEl.src = './cart.js';
+                    scriptEl.onload = function() {
+                        console.log('Backup cart.js loaded successfully');
+                        if (typeof displayOrderItems === 'function') {
+                            displayOrderItems();
+                        }
+                    };
+                    document.body.appendChild(scriptEl);
+                }
+            } catch (e) {
+                console.error('Error in backup script loading:', e);
+            }
+        })();
+
+        // Function to display order items
+        function displayOrderItems() {
+            const orderItemsElement = document.getElementById('order-items');
+            const subtotalElement = document.getElementById('order-subtotal');
+            const totalElement = document.getElementById('order-total');
+            
+            if (!orderItemsElement || !Array.isArray(cart)) return;
+            
+            // Clear current order display
+            orderItemsElement.innerHTML = '';
+            
+            if (cart.length === 0) {
+                // Display empty cart message
+                orderItemsElement.innerHTML = '<p>Your cart is empty. Please add items before checkout.</p>';
+                if (subtotalElement) subtotalElement.textContent = '0';
+                if (totalElement) totalElement.textContent = '0';
+                return;
+            }
+            
+            // Create order items
+            cart.forEach(item => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                
+                // Ensure item has all required properties
+                const itemName = item.name || 'Product';
+                const itemPrice = item.price || 0;
+                const itemQuantity = item.quantity || 1;
+                const itemImage = item.image || 'img2.avif'; // Fallback image
+                
+                orderItem.innerHTML = `
+                    <img src="${itemImage}" alt="${itemName}" onerror="this.src='img2.avif'">
+                    <div class="order-item-details">
+                        <h3>${itemName}</h3>
+                        <span class="bangla">সুস্বাদু খাবার, সেরা উপাদান দিয়ে প্রস্তুত</span>
+                        <p class="price-info">৳${itemPrice} × ${itemQuantity}</p>
+                        <p class="quantity-info">Subtotal: ৳${itemPrice * itemQuantity}</p>
+                    </div>
+                `;
+                
+                orderItemsElement.appendChild(orderItem);
+            });
+            
+            // Update subtotal and total
+            updateOrderSummary();
+        }
+        
+        // Function to update order summary
+        function updateOrderSummary() {
+            const subtotalElement = document.getElementById('order-subtotal');
+            const shippingElement = document.getElementById('order-shipping');
+            const totalElement = document.getElementById('order-total');
+            
+            if (!subtotalElement || !shippingElement || !totalElement) return;
+            
+            // Calculate subtotal
+            const subtotal = calculateTotal();
+            
+            // Get shipping fee
+            const shippingFee = parseInt(shippingElement.textContent);
+            
+            // Calculate total
+            const total = subtotal + shippingFee;
+            
+            // Update display
+            subtotalElement.textContent = subtotal;
+            totalElement.textContent = total;
+        }
+        
+        // Function to select shipping method
+        function selectShippingMethod(element, fee, type) {
+            // Remove selected class from all shipping methods
+            document.querySelectorAll('.shipping-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to the clicked element
+            element.classList.add('selected');
+            
+            // Check the radio button
+            const radioBtn = element.querySelector('input[type="radio"]');
+            if (radioBtn) {
+                radioBtn.checked = true;
+            }
+            
+            // Update shipping fee
+            document.getElementById('order-shipping').textContent = fee;
+            
+            // Update order summary
+            updateOrderSummary();
+        }
+        
+        // Function to select payment method
+        function selectPaymentMethod(element, type) {
+            // Remove selected class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to the clicked element
+            element.classList.add('selected');
+            
+            // Check the radio button
+            const radioBtn = element.querySelector('input[type="radio"]');
+            if (radioBtn) {
+                radioBtn.checked = true;
+            }
+            
+            // Update payment info box
+            const paymentInfo = document.getElementById('payment-info');
+            
+            if (type === 'delivery') {
+                paymentInfo.innerHTML = '<p><strong>Payment on Delivery:</strong> Pay when your order arrives at your doorstep.</p>';
+                paymentInfo.style.borderLeft = '4px solid #ff4d4d';
+            } else if (type === 'card') {
+                paymentInfo.innerHTML = '<p><strong>Payment with Card:</strong> Securely pay online with your credit or debit card.</p>';
+                paymentInfo.style.borderLeft = '4px solid #4CAF50';
+            }
+        }
+        
+        // Function to place order
+        function placeOrder() {
+            // Validate form
+            const form = document.getElementById('billing-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Check if cart has items
+            if (!Array.isArray(cart) || cart.length === 0) {
+                alert('Your cart is empty. Please add items before checking out.');
+                return;
+            }
+            
+            // Get form values
+            const fullname = document.getElementById('fullname').value;
+            const city = document.getElementById('city').value;
+            const address = document.getElementById('address').value;
+            
+            // Get selected payment and shipping methods
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const shippingMethod = document.querySelector('input[name="shipping"]:checked').value;
+            
+            // Create order summary
+            const subtotal = calculateTotal();
+            const shipping = parseInt(document.getElementById('order-shipping').textContent);
+            const total = subtotal + shipping;
+            
+            // Show order confirmation
+            alert(`Order Placed Successfully!\n\nThank you, ${fullname}!\n\nYour order will be delivered to ${address}, ${city}.\n\nPayment Method: ${paymentMethod === 'delivery' ? 'Payment on Delivery' : 'Credit/Debit Card'}\nShipping Method: ${shippingMethod === 'standard' ? 'Standard (30 min)' : 'Express (20 min)'}\n\nTotal: ৳${total}`);
+            
+            // Clear cart and redirect to home page
+            clearCart();
+            window.location.href = 'index.html';
+        }
+        
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display order items
+            displayOrderItems();
+        });
+    </script>
+</body>
+</html>
