@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - My Product</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Cart-specific styles */
+        .cart-page {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .cart-header button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cart-header button:hover {
+            background-color: #c82333;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 20px;
+        }
+        
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .quantity-controls span {
+            padding: 0 15px;
+            font-size: 16px;
+        }
+        
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .cart-summary {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .cart-total {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .checkout-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            padding: 30px;
+            color: #666;
+        }
+        
+        .payment-options {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .payment-options h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .payment-method {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .payment-method label {
+            cursor: pointer;
+        }
+        
+        .payment-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9f7ef;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+        }
+        
+        .payment-info p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Name :komol Krishna Paul, ID: 2221337 -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="cart-page">
+        <div class="cart-header">
+            <h1>Your Shopping Cart</h1>
+            <button onclick="clearCart()">Clear Cart</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items will be inserted here by JavaScript -->
+            <p class="empty-cart">Your cart is empty.</p>
+        </div>
+        
+        <div class="cart-summary">
+            <div class="cart-total">
+                Total: ৳<span id="cart-total">0</span>
+            </div>
+            
+            <div class="payment-options">
+                <h3>Payment Options</h3>
+                <div class="payment-method">
+                    <input type="radio" id="cash-delivery" name="payment" value="cash" checked onchange="updatePaymentMethod()">
+                    <label for="cash-delivery">Cash on Delivery</label>
+                </div>
+                <div class="payment-method">
+                    <input type="radio" id="card-payment" name="payment" value="card" onchange="updatePaymentMethod()">
+                    <label for="card-payment">Card Payment</label>
+                </div>
+                <div class="payment-method">
+                    <input type="radio" id="mobile-banking" name="payment" value="mobile" onchange="updatePaymentMethod()">
+                    <label for="mobile-banking">Mobile Banking</label>
+                </div>
+                <div id="payment-info" class="payment-info">
+                    <p><strong>Cash on Delivery:</strong> Pay when your order arrives at your doorstep.</p>
+                </div>
+            </div>
+            
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 My Store</p>
+    </footer>
+    
+    <script src="cart.js"></script>
+    <script>
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items to your cart before checking out.');
+            } else {
+                // Get selected payment method
+                const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+                
+                // Get payment method name for display
+                let paymentMethodName = "Cash on Delivery";
+                if (selectedPayment === "card") {
+                    paymentMethodName = "Card Payment";
+                } else if (selectedPayment === "mobile") {
+                    paymentMethodName = "Mobile Banking";
+                }
+                
+                // Show confirmation message with payment method
+                alert(`Thank you for your order! \n\nYour order has been placed successfully with payment method: ${paymentMethodName}. \n\nTotal amount: ৳${calculateTotal()}`);
+                
+                // If selected payment method is Cash on Delivery, show additional message
+                if (selectedPayment === "cash") {
+                    alert("Your order will be delivered within 3-5 business days. Please keep the payment ready for delivery.");
+                }
+                
+                clearCart();
+            }
+        }
+        
+        function updatePaymentMethod() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const paymentInfo = document.getElementById('payment-info');
+            
+            if (selectedPayment === "cash") {
+                paymentInfo.innerHTML = '<p><strong>Cash on Delivery:</strong> Pay when your order arrives at your doorstep.</p>';
+                paymentInfo.style.borderLeft = '4px solid #28a745';
+                paymentInfo.style.backgroundColor = '#e9f7ef';
+            } else if (selectedPayment === "card") {
+                paymentInfo.innerHTML = '<p><strong>Card Payment:</strong> Securely pay online with your credit or debit card.</p>';
+                paymentInfo.style.borderLeft = '4px solid #007bff';
+                paymentInfo.style.backgroundColor = '#e7f3fe';
+            } else if (selectedPayment === "mobile") {
+                paymentInfo.innerHTML = '<p><strong>Mobile Banking:</strong> Pay using bKash, Nagad, or other mobile banking services.</p>';
+                paymentInfo.style.borderLeft = '4px solid #6f42c1';
+                paymentInfo.style.backgroundColor = '#f3e7ff';
+            }
+        }
+        
+        // Initialize payment method info when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart display
+            if (window.location.pathname.includes('cart.html')) {
+                displayCart();
+                updatePaymentMethod();
+            }
+        });
+    </script>
+</body>
+</html>

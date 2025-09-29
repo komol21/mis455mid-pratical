@@ -7,6 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" type="image/x-icon">
     <link rel="stylesheet" href="index.css">
+    <style>
+        .cart-count {
+            background-color: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Name :komol Krishna Paul ID :2221337 -->
@@ -16,6 +27,7 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count" class="cart-count">0</span></a></li>
                 <li><a href="contact.html">Contact Us</a></li>
             </ul>
         </nav>
@@ -63,5 +75,7 @@
     <footer>
         <p>&copy; 2024 My Store</p>
     </footer>
+    
+    <script src="cart.js"></script>
 </body>
 </html>
