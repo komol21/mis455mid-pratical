@@ -22,15 +22,63 @@
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 12px 20px;
+            border-radius: 30px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
         }
         
         .add-to-cart:hover {
             background-color: #218838;
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .product-item h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 12px 0;
+            height: 44px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .product-item p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        
+        .products-page {
+            background-color: #f8f9fa;
+            padding: 30px 0;
+        }
+        
+        .products-grid {
+            padding: 20px;
+        }
+        
+        .price-tag {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -48,26 +96,27 @@
     </header>
     
     <main class="products-page">
+        <h1>Our Delicious Menu</h1>
         <section class="products-grid">
             <div class="product-item">
                 <img src="imge 4.jpeg" alt="Product 1">
                 <h2>Chicken Burger</h2>
                 <p>prepare with 1x single patty, secret sliced onion & tomato</p>
-                <p>Price :190</p>
+                <p class="price-tag">৳190</p>
                 <button class="add-to-cart" onclick="addToCart('p1', 'Chicken Burger', 190, 'imge 4.jpeg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://media.istockphoto.com/id/520410807/photo/cheeseburger.jpg?s=612x612&w=0&k=20&c=fG_OrCzR5HkJGI8RXBk76NwxxTasMb1qpTVlEM0oyg4=" alt="Product 2">
                 <h2>Chicken cheese Burger</h2>
                 <p>Prepared with 1x single chicken patty, 1x sliced cheddar cheese, secret sauce, sliced onion, tomato & lettuce</p>
-                <p>price 219</p>
+                <p class="price-tag">৳219</p>
                 <button class="add-to-cart" onclick="addToCart('p2', 'Chicken cheese Burger', 219, 'https://media.istockphoto.com/id/520410807/photo/cheeseburger.jpg?s=612x612&w=0&k=20&c=fG_OrCzR5HkJGI8RXBk76NwxxTasMb1qpTVlEM0oyg4=')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYWlwbW7ZG95QL4uyVF_kotc9f7G2DqZJUNQ&s" alt="Product 3">
                 <h2>Smokey BBQ Chicken Burger</h2>
                 <p>Prepared with 1x single chicken patty, bbq sauce, secret sauce, sliced onion, tomato & lettuce</p>
-                <p>Price 240</p>
+                <p class="price-tag">৳240</p>
                 <button class="add-to-cart" onclick="addToCart('p3', 'Smokey BBQ Chicken Burger', 240, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYWlwbW7ZG95QL4uyVF_kotc9f7G2DqZJUNQ&s')">Add to Cart</button>
             </div>
             
@@ -76,63 +125,63 @@
                 <h2>
                     Chicken Blast Barger </h2>
                 <p>Prepared with double chicken patty, molten cheddar cheese, 2x sausage slice, 1x sliced cheddar cheese, secret sauce  & lettuce</p>
-                <p>Price 350</p>
+                <p class="price-tag">৳350</p>
                 <button class="add-to-cart" onclick="addToCart('p4', 'Chicken Blast Barger', 350, 'https://img.freepik.com/free-photo/front-view-meat-burger-with-cheese-salad-tomatoes-dark-background_140725-89520.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://thumbs.dreamstime.com/b/tasty-spicy-peri-peri-french-fries-mayonnaise-served-plate-over-rustic-wooden-background-selective-focus-tasty-spicy-223921260.jpg" alt="Product 3">
                 <h2>Peri Peri French Fries</h2>
                 <p>Prepared with potatoes, sugar & deep fried</p>
-                <p>Price 120</p>
+                <p class="price-tag">৳120</p>
                 <button class="add-to-cart" onclick="addToCart('p5', 'Peri Peri French Fries', 120, 'https://thumbs.dreamstime.com/b/tasty-spicy-peri-peri-french-fries-mayonnaise-served-plate-over-rustic-wooden-background-selective-focus-tasty-spicy-223921260.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://st2.depositphotos.com/1031681/5785/i/450/depositphotos_57858061-stock-photo-fried-chicken-wings-in-batter.jpg" alt="Product 3">
                 <h2>Crispy Chicken Wings</h2>
                 <p>Prepared with chicken wings, blue cheese dressing & crumbled blue cheese</p>
-                <p>Price 150</p>
+                <p class="price-tag">৳150</p>
                 <button class="add-to-cart" onclick="addToCart('p6', 'Crispy Chicken Wings', 150, 'https://st2.depositphotos.com/1031681/5785/i/450/depositphotos_57858061-stock-photo-fried-chicken-wings-in-batter.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="img 5.png" alt="Product 3">
                 <h2>Rice Bowl with Chicken Black Pepper</h2>
                 <p>tender chicken stir-fried with vegetables in a savory black pepper sauce, served over fluffy rice.</p>
-                <p>Price 220</p>
+                <p class="price-tag">৳220</p>
                 <button class="add-to-cart" onclick="addToCart('p7', 'Rice Bowl with Chicken Black Pepper', 220, 'img 5.png')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="img 6.png" alt="Product 3">
                 <h2>Rice Bowl with BBQ Chicken Steak</h2>
                 <p>Indulge in our savory rice bowl featuring tender BBQ chicken steak atop a bed of fluffy rice, perfect for a satisfying meal.</p>
-                <p> Price 280</p>
+                <p class="price-tag">৳280</p>
                 <button class="add-to-cart" onclick="addToCart('p8', 'Rice Bowl with BBQ Chicken Steak', 280, 'img 6.png')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://img.hellofresh.com/hellofresh_s3/image/sweet-chilli-chicken-rice-bowl-0f244e0c.jpg" alt="Product 3">
                 <h2>Sweet Chilli Chicken Rice Bowl</h2>
                 <p>This nutty delight uses sesame seeds, peanuts and sweet chilli sauce to top a flavourful mix of veggies and sliced chicken breast for a crave-worthy dinner</p>
-                <p>Price 250</p>
+                <p class="price-tag">৳250</p>
                 <button class="add-to-cart" onclick="addToCart('p9', 'Sweet Chilli Chicken Rice Bowl', 250, 'https://img.hellofresh.com/hellofresh_s3/image/sweet-chilli-chicken-rice-bowl-0f244e0c.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://www.allrecipes.com/thmb/wGUnIfJKpAeYrdLL-qCsFDMUBXU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/7489045loaded-beef-nachos-recipe-lutzflcat4x3-6c7ba4f55c514056894c920446cfd0b2.jpg" alt="Product 3">
                 <h2>mexican hot spicey Nachos</h2>
                 <p>Put your big boy pants on for these spicy mexican street corn nachos with chorizo. These cheat-day nachos bring out all the cheesy, spicy, lime flavors of mexican street corn with the hearty addition of spicy chorizo meat.</p>
-                 <p> Price :350</p>
+                <p class="price-tag">৳350</p>
                 <button class="add-to-cart" onclick="addToCart('p10', 'Mexican Hot Spicey Nachos', 350, 'https://www.allrecipes.com/thmb/wGUnIfJKpAeYrdLL-qCsFDMUBXU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/7489045loaded-beef-nachos-recipe-lutzflcat4x3-6c7ba4f55c514056894c920446cfd0b2.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="Ultimate-nachos.jpg" alt="Product 3">
                 <h2>Ultimate nachos</h2>
                 <p>Our ultimate nachos are the classic Tex-Mex style, fully loaded with guacamole, salsa and jalapenos dive in!</p>
-                <p> Price :250</p>
+                <p class="price-tag">৳250</p>
                 <button class="add-to-cart" onclick="addToCart('p11', 'Ultimate nachos', 250, 'Ultimate-nachos.jpg')">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="https://www.foodandwine.com/thmb/FioIZRbpiMXkonKRau8FwbcRjQs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/201403-xl-mushroom-garlic-chicken-chow-mein-02ab4824b29d4bc293f987ad2a317a8f.jpg" alt="Product 3">
                 <h2>Mushroom and Garlic Chicken Chow Mein</h2>
                 <p>Chicken and garlicky mushrooms pair perfectly in this easy Chinese chow mein recipe.</p>
-                <p> Price 250</p>
+                <p class="price-tag">৳250</p>
                 <button class="add-to-cart" onclick="addToCart('p12', 'Mushroom and Garlic Chicken Chow Mein', 250, 'https://www.foodandwine.com/thmb/FioIZRbpiMXkonKRau8FwbcRjQs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/201403-xl-mushroom-garlic-chicken-chow-mein-02ab4824b29d4bc293f987ad2a317a8f.jpg')">Add to Cart</button>
             </div>
             
