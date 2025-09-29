@@ -7,6 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <!-- Print styles -->
+    <style media="print">
+        body * {
+            visibility: hidden;
+        }
+        .bill-container, .bill-container * {
+            visibility: visible;
+        }
+        .bill-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: none;
+        }
+        .print-bill-btn, .close-bill-btn {
+            display: none;
+        }
+        @page {
+            size: auto;
+            margin: 10mm;
+        }
+    </style>
     <style>
         /* Cart-specific styles */
         .cart-page {
@@ -165,6 +188,104 @@
             margin: 0;
             font-size: 14px;
         }
+        
+        /* Bill styles */
+        .bill-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin: 30px auto;
+            padding: 30px;
+            max-width: 800px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .bill-header {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bill-header h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .bill-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .bill-items table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .bill-items th,
+        .bill-items td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .bill-items th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+        
+        .bill-summary {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .bill-summary p {
+            margin: 8px 0;
+        }
+        
+        .bill-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .bill-footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .bill-footer p {
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .print-bill-btn,
+        .close-bill-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        
+        .print-bill-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .close-bill-btn {
+            background-color: #6c757d;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -189,6 +310,43 @@
         <div id="cart-items" class="cart-items">
             <!-- Cart items will be inserted here by JavaScript -->
             <p class="empty-cart">Your cart is empty.</p>
+        </div>
+        
+        <!-- Bill container (hidden by default) -->
+        <div id="bill-container" class="bill-container" style="display: none;">
+            <div class="bill-header">
+                <h2>Order Bill</h2>
+                <div class="bill-info">
+                    <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+                    <p><strong>Date:</strong> <span id="order-date"></span></p>
+                </div>
+            </div>
+            <div class="bill-items">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bill-items-body">
+                        <!-- Bill items will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="bill-summary">
+                <p><strong>Subtotal:</strong> ৳<span id="bill-subtotal"></span></p>
+                <p><strong>Delivery Fee:</strong> ৳<span id="bill-delivery">60</span></p>
+                <p class="bill-total"><strong>Total Amount:</strong> ৳<span id="bill-total"></span></p>
+                <p><strong>Payment Method:</strong> <span id="bill-payment-method"></span></p>
+            </div>
+            <div class="bill-footer">
+                <p>Thank you for shopping with us!</p>
+                <button onclick="printBill()" class="print-bill-btn">Print Bill</button>
+                <button onclick="closeBill()" class="close-bill-btn">Close</button>
+            </div>
         </div>
         
         <div class="cart-summary">
@@ -225,30 +383,99 @@
     
     <script src="cart.js"></script>
     <script>
+        // Generate a random order ID
+        function generateOrderID() {
+            return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+        }
+        
+        // Format current date
+        function formatDate(date) {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Generate and display bill
+        function generateBill() {
+            // Get selected payment method
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            
+            // Get payment method name for display
+            let paymentMethodName = "Cash on Delivery";
+            if (selectedPayment === "card") {
+                paymentMethodName = "Card Payment";
+            } else if (selectedPayment === "mobile") {
+                paymentMethodName = "Mobile Banking";
+            }
+            
+            // Set bill header information
+            document.getElementById('order-id').textContent = generateOrderID();
+            document.getElementById('order-date').textContent = formatDate(new Date());
+            document.getElementById('bill-payment-method').textContent = paymentMethodName;
+            
+            // Calculate subtotal
+            const subtotal = calculateTotal();
+            document.getElementById('bill-subtotal').textContent = subtotal;
+            
+            // Calculate total (subtotal + delivery fee)
+            const deliveryFee = 60; // Fixed delivery fee
+            const total = subtotal + deliveryFee;
+            document.getElementById('bill-total').textContent = total;
+            
+            // Generate bill items
+            const billItemsBody = document.getElementById('bill-items-body');
+            billItemsBody.innerHTML = '';
+            
+            cart.forEach(item => {
+                const row = document.createElement('tr');
+                const itemTotal = item.price * item.quantity;
+                
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>৳${item.price}</td>
+                    <td>${item.quantity}</td>
+                    <td>৳${itemTotal}</td>
+                `;
+                
+                billItemsBody.appendChild(row);
+            });
+            
+            // Show bill container
+            document.getElementById('bill-container').style.display = 'block';
+        }
+        
+        function printBill() {
+            window.print();
+        }
+        
+        function closeBill() {
+            document.getElementById('bill-container').style.display = 'none';
+            clearCart();
+            // Redirect to the home page
+            window.location.href = 'index.html';
+        }
+        
         function checkout() {
             if (cart.length === 0) {
                 alert('Your cart is empty. Please add items to your cart before checking out.');
             } else {
+                // Generate and show bill
+                generateBill();
+                
                 // Get selected payment method
                 const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
                 
-                // Get payment method name for display
-                let paymentMethodName = "Cash on Delivery";
-                if (selectedPayment === "card") {
-                    paymentMethodName = "Card Payment";
-                } else if (selectedPayment === "mobile") {
-                    paymentMethodName = "Mobile Banking";
-                }
-                
-                // Show confirmation message with payment method
-                alert(`Thank you for your order! \n\nYour order has been placed successfully with payment method: ${paymentMethodName}. \n\nTotal amount: ৳${calculateTotal()}`);
-                
                 // If selected payment method is Cash on Delivery, show additional message
                 if (selectedPayment === "cash") {
-                    alert("Your order will be delivered within 3-5 business days. Please keep the payment ready for delivery.");
+                    setTimeout(() => {
+                        alert("Your order will be delivered within 3-5 business days. Please keep the payment ready for delivery.");
+                    }, 500);
                 }
-                
-                clearCart();
             }
         }
         
