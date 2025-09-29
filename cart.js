@@ -162,11 +162,6 @@ function displayCart() {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         
-        // Generate random stock information
-        const stock = Math.floor(Math.random() * 10) + 1;
-        const stockClass = stock <= 3 ? 'out-of-stock' : '';
-        const stockText = stock <= 3 ? `Only ${stock} left!` : `In Stock (${stock})`;
-        
         cartItem.innerHTML = `
             <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-details">
@@ -181,7 +176,6 @@ function displayCart() {
                     <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
                     <span>${item.quantity}</span>
                     <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
-                    <span class="stock-info ${stockClass}">${stockText}</span>
                 </div>
             </div>
             <button class="remove-btn" onclick="removeFromCart('${item.id}')" title="Remove item">×</button>
