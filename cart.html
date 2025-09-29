@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - My Product Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Lobster&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://cdna.artstation.com/p/assets/images/images/023/767/398/large/solohive-technology-jawx-hussain-square-11.jpg?1580280648" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <!-- Print styles -->
@@ -14,6 +14,8 @@
         }
         .bill-container, .bill-container * {
             visibility: visible;
+            color: #000;
+            background-color: #fff;
         }
         .bill-container {
             position: absolute;
@@ -31,10 +33,26 @@
         }
     </style>
     <style>
-        /* Cart-specific styles */
+        /* Dark theme cart styles */
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        header {
+            background-color: #000;
+            border-bottom: 1px solid #333;
+        }
+        
+        footer {
+            background-color: #000;
+            border-top: 1px solid #333;
+        }
+        
         .cart-page {
             padding: 20px;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
         
@@ -43,157 +61,287 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .cart-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .cart-header button {
-            background-color: #dc3545;
+            background-color: #ff4d4d;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
         
         .cart-header button:hover {
-            background-color: #c82333;
+            background-color: #ff3333;
+            transform: translateY(-2px);
+        }
+        
+        .cart-items {
+            margin-bottom: 30px;
         }
         
         .cart-item {
             display: flex;
             margin-bottom: 20px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
         }
         
         .cart-item img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             object-fit: cover;
-            border-radius: 4px;
-            margin-right: 20px;
+            border-radius: 8px;
+            margin-right: 25px;
         }
         
         .cart-item-details {
             flex-grow: 1;
         }
         
-        .quantity-controls {
-            display: flex;
-            align-items: center;
+        .cart-item h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .cart-item .product-description {
+            margin: 10px 0;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        .cart-item .product-description .bangla {
+            font-style: italic;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .cart-item .weight-info {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 8px 0;
+        }
+        
+        .cart-item .price-info {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff4d4d;
             margin: 10px 0;
         }
         
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
         .quantity-controls button {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #ccc;
-            background-color: #f8f8f8;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background-color: #333;
+            color: #fff;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .quantity-controls button:hover {
+            background-color: #444;
         }
         
         .quantity-controls span {
-            padding: 0 15px;
-            font-size: 16px;
+            padding: 0 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .stock-info {
+            color: #4CAF50;
+            font-size: 0.85rem;
+            margin-left: 15px;
+        }
+        
+        .out-of-stock {
+            color: #ff4d4d;
         }
         
         .remove-btn {
-            background-color: #dc3545;
-            color: white;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            color: #ff4d4d;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            font-size: 24px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .remove-btn:hover {
+            background-color: rgba(255, 77, 77, 0.1);
+            transform: scale(1.1);
         }
         
         .cart-summary {
-            margin-top: 30px;
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .cart-total {
-            font-size: 24px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .subtotal-row, 
+        .shipping-row, 
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .total-row {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #fff;
+        }
+        
+        .shipping-options {
+            margin: 25px 0;
+        }
+        
+        .shipping-options h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .shipping-method {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            background-color: #252525;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shipping-method:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .shipping-method.selected {
+            background-color: #333;
+            border: 1px solid #444;
+        }
+        
+        .shipping-method input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #ff4d4d;
+        }
+        
+        .shipping-method label {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .shipping-price {
             font-weight: bold;
-            margin-bottom: 20px;
+            color: #ff4d4d;
+        }
+        
+        .shipping-time {
+            display: block;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 5px;
         }
         
         .checkout-btn {
-            background-color: #28a745;
+            background-color: #ff4d4d;
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 18px;
-            border-radius: 4px;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 25px;
         }
         
         .checkout-btn:hover {
-            background-color: #218838;
+            background-color: #ff3333;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
         }
         
         .empty-cart {
             text-align: center;
-            font-size: 18px;
-            padding: 30px;
-            color: #666;
-        }
-        
-        .payment-options {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f8f8;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .payment-options h3 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 18px;
-        }
-        
-        .payment-method {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .payment-method input[type="radio"] {
-            margin-right: 10px;
-        }
-        
-        .payment-method label {
-            cursor: pointer;
-        }
-        
-        .payment-info {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #e9f7ef;
-            border-left: 4px solid #28a745;
-            border-radius: 4px;
-        }
-        
-        .payment-info p {
-            margin: 0;
-            font-size: 14px;
+            font-size: 1.2rem;
+            padding: 50px;
+            color: #aaa;
+            background-color: #1e1e1e;
+            border-radius: 12px;
         }
         
         /* Bill styles */
         .bill-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.5);
             margin: 30px auto;
             padding: 30px;
             max-width: 800px;
@@ -204,10 +352,11 @@
             z-index: 1000;
             max-height: 90vh;
             overflow-y: auto;
+            border: 1px solid #333;
         }
         
         .bill-header {
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #333;
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
@@ -215,12 +364,17 @@
         .bill-header h2 {
             text-align: center;
             margin-top: 0;
-            color: #333;
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .bill-info {
             display: flex;
             justify-content: space-between;
+            color: #ccc;
         }
         
         .bill-items table {
@@ -233,29 +387,31 @@
         .bill-items td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #333;
         }
         
         .bill-items th {
-            background-color: #f8f8f8;
+            background-color: #252525;
             font-weight: bold;
+            color: #fff;
         }
         
         .bill-summary {
-            background-color: #f8f8f8;
-            padding: 15px;
+            background-color: #252525;
+            padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
         
         .bill-summary p {
-            margin: 8px 0;
+            margin: 10px 0;
+            color: #ccc;
         }
         
         .bill-total {
-            font-size: 18px;
-            font-weight: bold;
-            color: #28a745;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #ff4d4d;
         }
         
         .bill-footer {
@@ -266,25 +422,66 @@
         .bill-footer p {
             margin-bottom: 20px;
             font-style: italic;
+            color: #aaa;
         }
         
         .print-bill-btn,
         .close-bill-btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s;
         }
         
         .print-bill-btn {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
         }
         
+        .print-bill-btn:hover {
+            background-color: #3d8b40;
+            transform: translateY(-2px);
+        }
+        
         .close-bill-btn {
-            background-color: #6c757d;
+            background-color: #444;
             color: white;
+        }
+        
+        .close-bill-btn:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+            }
+            
+            .cart-item img {
+                width: 100%;
+                height: 180px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .remove-btn {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .bill-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .cart-header h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -338,7 +535,7 @@
             </div>
             <div class="bill-summary">
                 <p><strong>Subtotal:</strong> ৳<span id="bill-subtotal"></span></p>
-                <p><strong>Delivery Fee:</strong> ৳<span id="bill-delivery">60</span></p>
+                <p><strong>Shipping Fee:</strong> ৳<span id="bill-shipping">60</span></p>
                 <p class="bill-total"><strong>Total Amount:</strong> ৳<span id="bill-total"></span></p>
                 <p><strong>Payment Method:</strong> <span id="bill-payment-method"></span></p>
             </div>
@@ -351,29 +548,40 @@
         
         <div class="cart-summary">
             <div class="cart-total">
-                Total: ৳<span id="cart-total">0</span>
+                Cart Summary
             </div>
             
-            <div class="payment-options">
-                <h3>Payment Options</h3>
-                <div class="payment-method">
-                    <input type="radio" id="cash-delivery" name="payment" value="cash" checked onchange="updatePaymentMethod()">
-                    <label for="cash-delivery">Cash on Delivery</label>
+            <div class="subtotal-row">
+                <span>Subtotal</span>
+                <span>৳<span id="cart-subtotal">0</span></span>
+            </div>
+            
+            <div class="shipping-options">
+                <h3>Shipping Method</h3>
+                <div class="shipping-method selected" onclick="selectShippingMethod(this, 60, 'standard')">
+                    <input type="radio" id="standard-shipping" name="shipping" value="standard" checked onchange="updateShipping(60)">
+                    <label for="standard-shipping">
+                        Standard Shipping
+                        <span class="shipping-time">Delivery in 30 minutes</span>
+                    </label>
+                    <span class="shipping-price">৳60</span>
                 </div>
-                <div class="payment-method">
-                    <input type="radio" id="card-payment" name="payment" value="card" onchange="updatePaymentMethod()">
-                    <label for="card-payment">Card Payment</label>
-                </div>
-                <div class="payment-method">
-                    <input type="radio" id="mobile-banking" name="payment" value="mobile" onchange="updatePaymentMethod()">
-                    <label for="mobile-banking">Mobile Banking</label>
-                </div>
-                <div id="payment-info" class="payment-info">
-                    <p><strong>Cash on Delivery:</strong> Pay when your order arrives at your doorstep.</p>
+                <div class="shipping-method" onclick="selectShippingMethod(this, 100, 'express')">
+                    <input type="radio" id="express-shipping" name="shipping" value="express" onchange="updateShipping(100)">
+                    <label for="express-shipping">
+                        Express Shipping
+                        <span class="shipping-time">Delivery in 20 minutes</span>
+                    </label>
+                    <span class="shipping-price">৳100</span>
                 </div>
             </div>
             
-            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+            <div class="total-row">
+                <span>Total</span>
+                <span>৳<span id="cart-total">0</span></span>
+            </div>
+            
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
         </div>
     </main>
     
@@ -403,7 +611,8 @@
         // Generate and display bill
         function generateBill() {
             // Get selected payment method
-            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const selectedPayment = document.querySelector('input[name="payment"]:checked') ? 
+                document.querySelector('input[name="payment"]:checked').value : "cash";
             
             // Get payment method name for display
             let paymentMethodName = "Cash on Delivery";
@@ -422,9 +631,12 @@
             const subtotal = calculateTotal();
             document.getElementById('bill-subtotal').textContent = subtotal;
             
-            // Calculate total (subtotal + delivery fee)
-            const deliveryFee = 60; // Fixed delivery fee
-            const total = subtotal + deliveryFee;
+            // Get selected shipping fee
+            const shippingFee = getSelectedShippingFee();
+            document.getElementById('bill-shipping').textContent = shippingFee;
+            
+            // Calculate total (subtotal + shipping fee)
+            const total = subtotal + shippingFee;
             document.getElementById('bill-total').textContent = total;
             
             // Generate bill items

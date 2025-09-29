@@ -138,6 +138,7 @@ function updateCartCount() {
 function displayCart() {
     const cartItemsElement = document.getElementById('cart-items');
     const totalElement = document.getElementById('cart-total');
+    const subtotalElement = document.getElementById('cart-subtotal');
     
     if (!cartItemsElement) return;
     
@@ -150,6 +151,9 @@ function displayCart() {
         if (totalElement) {
             totalElement.textContent = '0';
         }
+        if (subtotalElement) {
+            subtotalElement.textContent = '0';
+        }
         return;
     }
     
@@ -158,27 +162,45 @@ function displayCart() {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         
+        // Generate random stock information
+        const stock = Math.floor(Math.random() * 10) + 1;
+        const stockClass = stock <= 3 ? 'out-of-stock' : '';
+        const stockText = stock <= 3 ? `Only ${stock} left!` : `In Stock (${stock})`;
+        
         cartItem.innerHTML = `
             <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-details">
                 <h3>${item.name}</h3>
-                <p>Price: ৳${item.price}</p>
+                <p class="product-description">
+                    ${item.name} - A delicious choice for food lovers
+                    <span class="bangla">সুস্বাদু খাবার, সেরা উপাদান দিয়ে প্রস্তুত</span>
+                </p>
+                <div class="weight-info">Weight: 1KG</div>
+                <p class="price-info">৳${item.price}</p>
                 <div class="quantity-controls">
                     <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
                     <span>${item.quantity}</span>
                     <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                    <span class="stock-info ${stockClass}">${stockText}</span>
                 </div>
-                <p>Total: ৳${item.price * item.quantity}</p>
-                <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
             </div>
+            <button class="remove-btn" onclick="removeFromCart('${item.id}')" title="Remove item">×</button>
         `;
         
         cartItemsElement.appendChild(cartItem);
     });
     
-    // Update total
+    // Update subtotal and total with shipping
+    const subtotal = calculateTotal();
+    const shippingFee = getSelectedShippingFee();
+    const total = subtotal + shippingFee;
+    
+    if (subtotalElement) {
+        subtotalElement.textContent = subtotal;
+    }
+    
     if (totalElement) {
-        totalElement.textContent = calculateTotal();
+        totalElement.textContent = total;
     }
 }
 
@@ -192,6 +214,43 @@ function clearCart() {
     
     // Update UI
     updateCartCount();
+    displayCart();
+}
+
+// Function to get the selected shipping fee
+function getSelectedShippingFee() {
+    const standardShipping = document.getElementById('standard-shipping');
+    return standardShipping && standardShipping.checked ? 60 : 100;
+}
+
+// Function to select shipping method
+function selectShippingMethod(element, fee, type) {
+    // Remove selected class from all shipping methods
+    document.querySelectorAll('.shipping-method').forEach(el => {
+        el.classList.remove('selected');
+    });
+    
+    // Add selected class to the clicked element
+    element.classList.add('selected');
+    
+    // Check the radio button
+    const radioBtn = element.querySelector('input[type="radio"]');
+    if (radioBtn) {
+        radioBtn.checked = true;
+    }
+    
+    // Update shipping
+    updateShipping(fee);
+}
+
+// Function to update shipping cost
+function updateShipping(fee) {
+    const billShippingElement = document.getElementById('bill-shipping');
+    if (billShippingElement) {
+        billShippingElement.textContent = fee;
+    }
+    
+    // Update total with new shipping fee
     displayCart();
 }
 
